@@ -29,9 +29,9 @@ public class DataManager
         
     }
 
-    //OtherSaveCheck¶õ ÀúÀåÀ§Ä¡¸¦ SaveJsonÀ¸·Î ÇÒ °ÍÀÎÁö, ¾Æ´Ï¸é ±âº»Àû JsonData·ÎÇÒ°ÍÀÎÁö¸¦ Á¤ÇÏ´Â°Í.
-    //SaveDataJsonÆÄÀÏÀº ÇöÀç ¾ÀÀÇ È°µ¿ÁßÀÎ °ªÀ» ÀúÀåÇÏ´Â°Í
-    //JsonData´Â ¸ÇÃ³À½ ±¸±Û ½ºÇÁ·¹µå ½ÃÆ®¿¡¼­ °¡Á®¿Â°ÍÀ» ¼³Á¤ÇÏ´Â °Í.
+    //OtherSaveCheckë€ ì €ì¥ìœ„ì¹˜ë¥¼ SaveJsonìœ¼ë¡œ í•  ê²ƒì¸ì§€, ì•„ë‹ˆë©´ ê¸°ë³¸ì  JsonDataë¡œí• ê²ƒì¸ì§€ë¥¼ ì •í•˜ëŠ”ê²ƒ.
+    //SaveDataJsoníŒŒì¼ì€ í˜„ì¬ ì”¬ì˜ í™œë™ì¤‘ì¸ ê°’ì„ ì €ì¥í•˜ëŠ”ê²ƒ
+    //JsonDataëŠ” ë§¨ì²˜ìŒ êµ¬ê¸€ ìŠ¤í”„ë ˆë“œ ì‹œíŠ¸ì—ì„œ ê°€ì ¸ì˜¨ê²ƒì„ ì„¤ì •í•˜ëŠ” ê²ƒ.
     public void SaveData<T>(T _DataClass, string _strSavingFileName, bool _otherSaveCheck) where T : class
     {
         string strjsonvalue = JsonConvert.SerializeObject(_DataClass);
@@ -49,7 +49,7 @@ public class DataManager
     }
 
 
-    #region ±¸±Û ½ºÇÁ·¹µå½ÃÆ® JsonÈ­ ±â´É
+    #region êµ¬ê¸€ ìŠ¤í”„ë ˆë“œì‹œíŠ¸ Jsoní™” ê¸°ëŠ¥
     private void MakeSheetDatset(DataSet dataset)
     {
         ClientSecrets pass = new ClientSecrets();
@@ -65,7 +65,7 @@ public class DataManager
             ApplicationName = "EzenZeldaBotw"
         });
 
-        Spreadsheet request = service.Spreadsheets.Get("1xsSqqybOJWXQMcQvpmYrLWz09oveOiCeOs4eiRUJytI").Execute();
+        Spreadsheet request = service.Spreadsheets.Get("ë³´ì•ˆí† í°").Execute();
 
         foreach (Sheet sheet in request.Sheets)
         {
@@ -81,14 +81,14 @@ public class DataManager
 
         try
         {
-            //!A1:MÀº ½ºÇÁ·¹µå½ÃÆ® A¿­ºÎÅÍ M¿­±îÁö µ¥ÀÌÅÍ¸¦ ¹Ş¾Æ¿À°Ú´Ù´Â ¼Ò¸®
-            SpreadsheetsResource.ValuesResource.GetRequest request = service.Spreadsheets.Values.Get("1xsSqqybOJWXQMcQvpmYrLWz09oveOiCeOs4eiRUJytI", sheetName + "!A1:M");
-            //API È£Ãâ·Î ¹Ş¾Æ¿Â IList µ¥ÀÌÅÍ
+            //!A1:Mì€ ìŠ¤í”„ë ˆë“œì‹œíŠ¸ Aì—´ë¶€í„° Mì—´ê¹Œì§€ ë°ì´í„°ë¥¼ ë°›ì•„ì˜¤ê² ë‹¤ëŠ” ì†Œë¦¬
+            SpreadsheetsResource.ValuesResource.GetRequest request = service.Spreadsheets.Values.Get("ë³´ì•ˆí† í°", sheetName + "!A1:M");
+            //API í˜¸ì¶œë¡œ ë°›ì•„ì˜¨ IList ë°ì´í„°
             var jsonObject = request.Execute().Values;
-            //IList µ¥ÀÌÅÍ¸¦ jsonConvert ÇÏ±âÀ§ÇØ Á÷·ÄÈ­
+            //IList ë°ì´í„°ë¥¼ jsonConvert í•˜ê¸°ìœ„í•´ ì§ë ¬í™”
             string jsonString = ParseSheetData(jsonObject);
 
-            //DataTable·Î º¯È¯
+            //DataTableë¡œ ë³€í™˜
             result = SpreadSheetToDataTable(jsonString);
         }
         catch (Exception e)
@@ -96,18 +96,18 @@ public class DataManager
             success = false;
             Debug.LogError(e);
             string path = string.Format("JsonData/{0}", sheetName);
-            //¿¹¿Ü ¹ß»ı½Ã ·ÎÄÃ °æ·Î¿¡ ÀÖ´Â json ÆÄÀÏÀ» ÅëÇØ µ¥ÀÌÅÍ °¡Á®¿È
+            //ì˜ˆì™¸ ë°œìƒì‹œ ë¡œì»¬ ê²½ë¡œì— ìˆëŠ” json íŒŒì¼ì„ í†µí•´ ë°ì´í„° ê°€ì ¸ì˜´
             result = DataUtil.GetDataTable(path, sheetName);
-            //Debug.Log("½ÃÆ® ·Îµå ½ÇÆĞ·Î ·ÎÄÃ " + sheetName + " json µ¥ÀÌÅÍ ºÒ·¯¿È");
+            //Debug.Log("ì‹œíŠ¸ ë¡œë“œ ì‹¤íŒ¨ë¡œ ë¡œì»¬ " + sheetName + " json ë°ì´í„° ë¶ˆëŸ¬ì˜´");
         }
 
-        //Debug.Log(sheetName + " ½ºÇÁ·¹µå½ÃÆ® ·Îµå " + (success ? "¼º°ø" : "½ÇÆĞ"));
+        //Debug.Log(sheetName + " ìŠ¤í”„ë ˆë“œì‹œíŠ¸ ë¡œë“œ " + (success ? "ì„±ê³µ" : "ì‹¤íŒ¨"));
 
         result.TableName = sheetName;
 
         if (result != null)
         {
-            //º¯È¯ÇÑ Å×ÀÌºíÀ» json ÆÄÀÏ·Î ÀúÀå
+            //ë³€í™˜í•œ í…Œì´ë¸”ì„ json íŒŒì¼ë¡œ ì €ì¥
             SaveDataToFile(result);
         }
 
@@ -148,22 +148,22 @@ public class DataManager
         JsonPath = string.Concat(Application.persistentDataPath + "/" + newTable.TableName + ".json");
 
         FileInfo info = new FileInfo(JsonPath);
-        //µ¿ÀÏ ÆÄÀÏ À¯¹« Ã¼Å©
+        //ë™ì¼ íŒŒì¼ ìœ ë¬´ ì²´í¬
         if (info.Exists)
         {
             DataTable checkTable = DataUtil.GetDataTable(info);
-            //ÆÄÀÏ ³»¿ë Ã¼Å©
+            //íŒŒì¼ ë‚´ìš© ì²´í¬
             if (BinaryCheck<DataTable>(newTable, checkTable))
             {
                 return;
             }
         }
-        //jsonÆÄÀÏ ÀúÀå
+        //jsoníŒŒì¼ ì €ì¥
         DataUtil.SetObjectFile(newTable.TableName, newTable, _otherSaveCheck);
     }
     private bool BinaryCheck<T>(T src, T target)
     {
-        //µÎ ´ë»óÀ» ¹ÙÀÌ³Ê¸®·Î º¯È¯ÇØ¼­ ºñ±³, ´Ù¸£¸é false ¹İÈ¯
+        //ë‘ ëŒ€ìƒì„ ë°”ì´ë„ˆë¦¬ë¡œ ë³€í™˜í•´ì„œ ë¹„êµ, ë‹¤ë¥´ë©´ false ë°˜í™˜
         BinaryFormatter formatter1 = new BinaryFormatter();
         MemoryStream stream1 = new MemoryStream();
         formatter1.Serialize(stream1, src);
