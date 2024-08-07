@@ -1,10 +1,10 @@
 ## Unity Engine 활용한 젤다 모작
 
 ### 영상URL 
-https://www.youtube.com/watch?v=frzYh1UGFYg
+https://youtu.be/UYIqP4hOb78?si=RDCXo3f6hoxN4BCD
 
 ### 인원 
-4명
+1명
 
 ### 기간 
 2023.12 ~ 2024.02
