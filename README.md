@@ -4,7 +4,7 @@
 https://youtu.be/UYIqP4hOb78?si=RDCXo3f6hoxN4BCD
 
 ### 인원 
-1명
+4명
 
 ### 기간 
 2023.12 ~ 2024.02
@@ -13,4 +13,4 @@ https://youtu.be/UYIqP4hOb78?si=RDCXo3f6hoxN4BCD
 visual studio, Unity Engine, C#
 
 
-- 본인이 작성한 스크립트만 커밋
+- 본인이 작성한 스크립트만 있음
