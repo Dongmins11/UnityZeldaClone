@@ -1,7 +1,7 @@
 ## Unity Engine 활용한 젤다 모작
 
 ### 영상URL 
-https://youtu.be/UYIqP4hOb78?si=RDCXo3f6hoxN4BCD
+https://www.youtube.com/watch?v=frzYh1UGFYg
 
 ### 인원 
 4명
